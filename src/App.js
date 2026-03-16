@@ -1,23 +1,201 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import JSXDemo from './JSXDemo';
+import DataLoader from './DataLoader';
+import ButtonWithLogging from './ButtonWithLogging';
+import Greeting from './Greeting';
+import Counter from './Counter';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+  const [name, setName] = useState('Amina');
+  const [selectedProfile, setSelectedProfile] = useState('Alice');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [favorites, setFavorites] = useState([]);
+
+  const hasFavorite = favorites.includes(selectedProfile);
+
+  function handleAddFavorite() {
+    if (hasFavorite) {
+      return;
+    }
+
+    setFavorites((currentFavorites) => [...currentFavorites, selectedProfile]);
+  }
+
+  function renderProfiles(profiles) {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+    const visibleProfiles = profiles.filter((profile) =>
+      profile.toLowerCase().includes(normalizedSearch)
+    );
+
+    if (!visibleProfiles.length) {
+      return (
+        <p className="empty-state">
+          Aucun profil ne correspond a votre recherche.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      );
+    }
+
+    return (
+      <ul className="profile-list" aria-label="Liste des profils">
+        {visibleProfiles.map((profile) => {
+          const isActive = profile === selectedProfile;
+
+          return (
+            <li
+              key={profile}
+              className={`profile-item${isActive ? ' is-active' : ''}`}
+            >
+              <button
+                type="button"
+                className="profile-select"
+                aria-label={`Choisir ${profile}`}
+                onClick={() => setSelectedProfile(profile)}
+              >
+                <span className="profile-name">{profile}</span>
+                <span className="profile-status">
+                  {isActive ? 'Actif' : 'Choisir'}
+                </span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
+
+  return (
+    <div className="app-shell">
+      <div className="app-shell__glow app-shell__glow--one" />
+      <div className="app-shell__glow app-shell__glow--two" />
+
+      <main className="app-layout">
+        <section className="panel panel--hero">
+          <p className="eyebrow">React Lab 7</p>
+          <h1>Tableau de bord des patterns React</h1>
+          <p className="hero-copy">
+            Une application interactive qui combine JSX, Higher-Order
+            Components, render props et tests React Testing Library.
+          </p>
+
+          <div className="hero-stats">
+            <article className="stat-card">
+              <span className="stat-card__value">{favorites.length}</span>
+              <span className="stat-card__label">favori(s)</span>
+            </article>
+            <article className="stat-card">
+              <span className="stat-card__value">{selectedProfile}</span>
+              <span className="stat-card__label">profil actif</span>
+            </article>
+            <article className="stat-card">
+              <span className="stat-card__value">{name}</span>
+              <span className="stat-card__label">nom saisi</span>
+            </article>
+          </div>
+        </section>
+
+        <JSXDemo name={name} onNameChange={setName} />
+
+        <section className="panel">
+          <div className="panel-heading">
+            <p className="eyebrow">Render Props</p>
+            <h2>Selection de profils</h2>
+            <p>
+              Choisissez un profil a partir d&apos;une liste chargee par un
+              composant qui delivre ses donnees via une fonction de rendu.
+            </p>
+          </div>
+
+          <label className="field-label" htmlFor="profile-search">
+            Rechercher un profil
+          </label>
+          <input
+            id="profile-search"
+            className="text-input"
+            type="search"
+            placeholder="Exemple : Alice"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+
+          <DataLoader render={renderProfiles} />
+        </section>
+
+        <section className="panel">
+          <div className="panel-heading">
+            <p className="eyebrow">Higher-Order Component</p>
+            <h2>Action instrumentee</h2>
+            <p>
+              Le bouton ci-dessous est enrichi par un HOC qui journalise ses
+              props dans la console avant affichage.
+            </p>
+          </div>
+
+          <div className="action-grid">
+            <div className="surface">
+              <Greeting name={selectedProfile} />
+              <p className="surface-copy">
+                Profil actuellement selectionne depuis la liste dynamique.
+              </p>
+            </div>
+
+            <div className="surface surface--compact">
+              <ButtonWithLogging
+                label={hasFavorite ? 'Profil deja ajoute' : 'Ajouter aux favoris'}
+                onClick={handleAddFavorite}
+                disabled={hasFavorite}
+              />
+              <p className="surface-copy">
+                Les props du bouton sont visibles dans la console du navigateur.
+              </p>
+            </div>
+          </div>
+
+          <div className="favorites">
+            <div>
+              <h3>Favoris sauvegardes</h3>
+              <p>
+                {favorites.length
+                  ? 'Votre selection persiste dans l etat du composant.'
+                  : 'Ajoutez un profil pour construire votre shortlist.'}
+              </p>
+            </div>
+
+            <ul className="favorites-list" aria-label="Liste des favoris">
+              {favorites.length ? (
+                favorites.map((favorite) => <li key={favorite}>{favorite}</li>)
+              ) : (
+                <li>Aucun favori pour le moment</li>
+              )}
+            </ul>
+          </div>
+        </section>
+
+        <section className="panel panel--split">
+          <div className="panel-heading">
+            <p className="eyebrow">Testing Library</p>
+            <h2>Composants verifies</h2>
+            <p>
+              <code>Greeting</code> et <code>Counter</code> sont utilises dans
+              l&apos;application et couverts par des tests unitaires.
+            </p>
+          </div>
+
+          <div className="testing-grid">
+            <div className="surface">
+              <Greeting name={name} />
+              <p className="surface-copy">
+                Cette salutation se met a jour a chaque saisie dans le
+                formulaire JSX.
+              </p>
+            </div>
+
+            <div className="surface">
+              <Counter />
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
