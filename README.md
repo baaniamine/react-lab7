@@ -28,9 +28,11 @@ npm run serve
 
 ## Tests
 
-```bash
-npm test -- --watchAll=false
-```
+
+
+https://github.com/user-attachments/assets/563583f5-7322-478a-9071-1606aab8f420
+
+
 
 ## Build production
 
