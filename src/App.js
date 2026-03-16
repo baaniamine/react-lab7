@@ -71,13 +71,6 @@ function App() {
 
       <main className="app-layout">
         <section className="panel panel--hero">
-          <p className="eyebrow">React Lab 7</p>
-          <h1>Tableau de bord des patterns React</h1>
-          <p className="hero-copy">
-            Une application interactive qui combine JSX, Higher-Order
-            Components, render props et tests React Testing Library.
-          </p>
-
           <div className="hero-stats">
             <article className="stat-card">
               <span className="stat-card__value">{favorites.length}</span>
@@ -98,12 +91,7 @@ function App() {
 
         <section className="panel">
           <div className="panel-heading">
-            <p className="eyebrow">Render Props</p>
-            <h2>Selection de profils</h2>
-            <p>
-              Choisissez un profil a partir d&apos;une liste chargee par un
-              composant qui delivre ses donnees via une fonction de rendu.
-            </p>
+            <h2>Profils</h2>
           </div>
 
           <label className="field-label" htmlFor="profile-search">
@@ -123,20 +111,12 @@ function App() {
 
         <section className="panel">
           <div className="panel-heading">
-            <p className="eyebrow">Higher-Order Component</p>
-            <h2>Action instrumentee</h2>
-            <p>
-              Le bouton ci-dessous est enrichi par un HOC qui journalise ses
-              props dans la console avant affichage.
-            </p>
+            <h2>Favoris</h2>
           </div>
 
           <div className="action-grid">
             <div className="surface">
               <Greeting name={selectedProfile} />
-              <p className="surface-copy">
-                Profil actuellement selectionne depuis la liste dynamique.
-              </p>
             </div>
 
             <div className="surface surface--compact">
@@ -145,9 +125,6 @@ function App() {
                 onClick={handleAddFavorite}
                 disabled={hasFavorite}
               />
-              <p className="surface-copy">
-                Les props du bouton sont visibles dans la console du navigateur.
-              </p>
             </div>
           </div>
 
@@ -171,28 +148,13 @@ function App() {
           </div>
         </section>
 
-        <section className="panel panel--split">
+        <section className="panel">
           <div className="panel-heading">
-            <p className="eyebrow">Testing Library</p>
-            <h2>Composants verifies</h2>
-            <p>
-              <code>Greeting</code> et <code>Counter</code> sont utilises dans
-              l&apos;application et couverts par des tests unitaires.
-            </p>
+            <h2>Compteur</h2>
           </div>
 
-          <div className="testing-grid">
-            <div className="surface">
-              <Greeting name={name} />
-              <p className="surface-copy">
-                Cette salutation se met a jour a chaque saisie dans le
-                formulaire JSX.
-              </p>
-            </div>
-
-            <div className="surface">
-              <Counter />
-            </div>
+          <div className="surface">
+            <Counter />
           </div>
         </section>
       </main>

@@ -12,12 +12,7 @@ function JSXDemo({ name, onNameChange }) {
   return (
     <section className="panel">
       <div className="panel-heading">
-        <p className="eyebrow">JSX</p>
-        <h2>Saisie et rendu instantanes</h2>
-        <p>
-          La meme information est affichee une fois via JSX et une fois via
-          <code> React.createElement </code>.
-        </p>
+        <h2>Profil</h2>
       </div>
 
       <div className="surface">
@@ -35,10 +30,6 @@ function JSXDemo({ name, onNameChange }) {
           placeholder="Votre prenom"
           onChange={(event) => onNameChange(event.target.value)}
         />
-        <p className="helper-copy">
-          Le reste de l&apos;application reutilise ce nom pour les composants
-          tests et l&apos;etat global.
-        </p>
       </div>
     </section>
   );

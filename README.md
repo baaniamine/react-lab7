@@ -20,6 +20,12 @@ npm install
 npm start
 ```
 
+Si vous voulez servir directement le build sur le meme port :
+
+```bash
+npm run serve
+```
+
 ## Tests
 
 ```bash
