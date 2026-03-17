@@ -30,7 +30,10 @@ npm run serve
 
 
 
-https://github.com/user-attachments/assets/563583f5-7322-478a-9071-1606aab8f420
+https://github.com/user-attachments/assets/faebd017-5d90-42fc-a411-3cfc54146a93
+
+
+
 
 
 
