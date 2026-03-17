@@ -49,6 +49,3 @@ npm run build
 - `src/DataLoader.js` : render prop qui fournit une liste de profils.
 - `src/Greeting.js` et `src/Counter.js` : composants couverts par des tests.
 
-## Depot cible
-
-Remote demande : [https://github.com/baaniamine/react-lab7](https://github.com/baaniamine/react-lab7)
