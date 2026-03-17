@@ -10,28 +10,22 @@ function JSXDemo({ name, onNameChange }) {
   );
 
   return (
-    <section className="panel">
-      <div className="panel-heading">
-        <h2>Profil</h2>
-      </div>
+    <div className="stack">
+      {elementJSX}
+      {elementJS}
 
-      <div className="surface">
-        {elementJSX}
-        {elementJS}
-
-        <label className="field-label" htmlFor="champ">
-          Entrez votre nom
-        </label>
-        <input
-          id="champ"
-          className="text-input"
-          type="text"
-          value={name}
-          placeholder="Votre prenom"
-          onChange={(event) => onNameChange(event.target.value)}
-        />
-      </div>
-    </section>
+      <label className="field-label" htmlFor="champ">
+        Entrez votre nom
+      </label>
+      <input
+        id="champ"
+        className="text-input"
+        type="text"
+        value={name}
+        placeholder="Votre prenom"
+        onChange={(event) => onNameChange(event.target.value)}
+      />
+    </div>
   );
 }
 

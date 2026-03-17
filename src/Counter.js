@@ -9,13 +9,10 @@ function Counter() {
       <button
         type="button"
         className="button button--primary"
-        onClick={() => setCount(count + 1)}
+        onClick={() => setCount((currentCount) => currentCount + 1)}
       >
         +
       </button>
-      <p className="counter__hint">
-        Chaque clic incrmente le compteur sans recharger l&apos;interface.
-      </p>
     </div>
   );
 }

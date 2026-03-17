@@ -1,27 +1,24 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
 
-test('allows selecting and saving a favorite profile', () => {
+test('renders the requested lab features', () => {
   const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
   render(<App />);
 
-  const nameInput = screen.getByLabelText(/entrez votre nom/i);
-  fireEvent.change(nameInput, { target: { value: 'Sami' } });
+  fireEvent.change(screen.getByLabelText(/entrez votre nom/i), {
+    target: { value: 'Sami' },
+  });
 
   expect(screen.getByText('Bonjour JSX, Sami')).toBeInTheDocument();
   expect(screen.getByText('Bonjour JavaScript pur, Sami')).toBeInTheDocument();
-
-  fireEvent.click(screen.getByRole('button', { name: /choisir charlie/i }));
-  expect(screen.getByText('Bonjour, Charlie')).toBeInTheDocument();
-
-  fireEvent.click(screen.getByRole('button', { name: /ajouter aux favoris/i }));
-
-  const favorites = screen.getByRole('list', { name: /liste des favoris/i });
-  expect(within(favorites).getByText('Charlie')).toBeInTheDocument();
+  expect(screen.getByText('Bonjour, Sami')).toBeInTheDocument();
   expect(
-    screen.getByRole('button', { name: /profil deja ajoute/i })
-  ).toBeDisabled();
+    screen.getByRole('button', { name: /cliquer ici/i })
+  ).toBeInTheDocument();
+  expect(screen.getByRole('list', { name: /liste des profils/i })).toBeInTheDocument();
+  expect(screen.getByText('Alice')).toBeInTheDocument();
+  expect(screen.getByText('Charlie')).toBeInTheDocument();
 
   consoleSpy.mockRestore();
 });

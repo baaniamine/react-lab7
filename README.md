@@ -7,7 +7,7 @@ Application React construite a partir du contenu fonctionnel des images du TP, s
 - Saisie de nom avec un composant `JSXDemo` qui affiche le meme contenu via JSX et via `React.createElement`.
 - Formulaire JSX avec `label`, `input`, `className` et `htmlFor`.
 - Bouton enveloppe par un Higher-Order Component `withLogging` qui journalise ses props.
-- Liste de profils fournie par un composant `DataLoader` utilisant une render prop.
+- Liste simple de profils fournie par un composant `DataLoader` utilisant une render prop.
 - Composants `Greeting` et `Counter` inclus dans l'application.
 - Tests unitaires et integration avec React Testing Library.
 

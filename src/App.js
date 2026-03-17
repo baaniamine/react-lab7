@@ -7,155 +7,41 @@ import Greeting from './Greeting';
 import Counter from './Counter';
 
 function App() {
-  const [name, setName] = useState('Amina');
-  const [selectedProfile, setSelectedProfile] = useState('Alice');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [favorites, setFavorites] = useState([]);
-
-  const hasFavorite = favorites.includes(selectedProfile);
-
-  function handleAddFavorite() {
-    if (hasFavorite) {
-      return;
-    }
-
-    setFavorites((currentFavorites) => [...currentFavorites, selectedProfile]);
-  }
-
-  function renderProfiles(profiles) {
-    const normalizedSearch = searchTerm.trim().toLowerCase();
-    const visibleProfiles = profiles.filter((profile) =>
-      profile.toLowerCase().includes(normalizedSearch)
-    );
-
-    if (!visibleProfiles.length) {
-      return (
-        <p className="empty-state">
-          Aucun profil ne correspond a votre recherche.
-        </p>
-      );
-    }
-
-    return (
-      <ul className="profile-list" aria-label="Liste des profils">
-        {visibleProfiles.map((profile) => {
-          const isActive = profile === selectedProfile;
-
-          return (
-            <li
-              key={profile}
-              className={`profile-item${isActive ? ' is-active' : ''}`}
-            >
-              <button
-                type="button"
-                className="profile-select"
-                aria-label={`Choisir ${profile}`}
-                onClick={() => setSelectedProfile(profile)}
-              >
-                <span className="profile-name">{profile}</span>
-                <span className="profile-status">
-                  {isActive ? 'Actif' : 'Choisir'}
-                </span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
+  const [name, setName] = useState('Alice');
 
   return (
     <div className="app-shell">
-      <div className="app-shell__glow app-shell__glow--one" />
-      <div className="app-shell__glow app-shell__glow--two" />
-
       <main className="app-layout">
-        <section className="panel panel--hero">
-          <div className="hero-stats">
-            <article className="stat-card">
-              <span className="stat-card__value">{favorites.length}</span>
-              <span className="stat-card__label">favori(s)</span>
-            </article>
-            <article className="stat-card">
-              <span className="stat-card__value">{selectedProfile}</span>
-              <span className="stat-card__label">profil actif</span>
-            </article>
-            <article className="stat-card">
-              <span className="stat-card__value">{name}</span>
-              <span className="stat-card__label">nom saisi</span>
-            </article>
-          </div>
+        <section className="panel">
+          <h1>TP JSX et Composition</h1>
+          <JSXDemo name={name} onNameChange={setName} />
         </section>
 
-        <JSXDemo name={name} onNameChange={setName} />
+        <section className="panel">
+          <h2>Bouton</h2>
+          <ButtonWithLogging label="Cliquer ici" />
+        </section>
 
         <section className="panel">
-          <div className="panel-heading">
-            <h2>Profils</h2>
-          </div>
-
-          <label className="field-label" htmlFor="profile-search">
-            Rechercher un profil
-          </label>
-          <input
-            id="profile-search"
-            className="text-input"
-            type="search"
-            placeholder="Exemple : Alice"
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
+          <h2>Liste des profils</h2>
+          <DataLoader
+            render={(data) => (
+              <ul className="simple-list" aria-label="Liste des profils">
+                {data.map((profile) => (
+                  <li key={profile}>{profile}</li>
+                ))}
+              </ul>
+            )}
           />
-
-          <DataLoader render={renderProfiles} />
         </section>
 
         <section className="panel">
-          <div className="panel-heading">
-            <h2>Favoris</h2>
-          </div>
-
-          <div className="action-grid">
-            <div className="surface">
-              <Greeting name={selectedProfile} />
-            </div>
-
-            <div className="surface surface--compact">
-              <ButtonWithLogging
-                label={hasFavorite ? 'Profil deja ajoute' : 'Ajouter aux favoris'}
-                onClick={handleAddFavorite}
-                disabled={hasFavorite}
-              />
-            </div>
-          </div>
-
-          <div className="favorites">
-            <div>
-              <h3>Favoris sauvegardes</h3>
-              <p>
-                {favorites.length
-                  ? 'Votre selection persiste dans l etat du composant.'
-                  : 'Ajoutez un profil pour construire votre shortlist.'}
-              </p>
-            </div>
-
-            <ul className="favorites-list" aria-label="Liste des favoris">
-              {favorites.length ? (
-                favorites.map((favorite) => <li key={favorite}>{favorite}</li>)
-              ) : (
-                <li>Aucun favori pour le moment</li>
-              )}
-            </ul>
-          </div>
+          <Greeting name={name} />
         </section>
 
         <section className="panel">
-          <div className="panel-heading">
-            <h2>Compteur</h2>
-          </div>
-
-          <div className="surface">
-            <Counter />
-          </div>
+          <h2>Compteur</h2>
+          <Counter />
         </section>
       </main>
     </div>
